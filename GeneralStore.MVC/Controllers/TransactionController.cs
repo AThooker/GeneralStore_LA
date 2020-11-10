@@ -1,7 +1,6 @@
 ﻿using GeneralStore.MVC.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,91 +8,101 @@ using System.Web.Mvc;
 
 namespace GeneralStore.MVC.Controllers
 {
-    public class CustomerController : Controller
+    public class TransactionController : Controller
     {
         private ApplicationDbContext _ctx = new ApplicationDbContext();
-        // GET: Customer
+        // GET: Transaction
         public ActionResult Index()
         {
-            List<Customer> custList = _ctx.Customers.ToList();
-            List<Customer> orderList = custList.OrderBy(c => c.CustomerId).ToList();
+            List<Transaction> transList = _ctx.Transactions.ToList();
+            List<Transaction> orderList = transList.OrderBy(t => t.TimeCreated).ToList();
             return View(orderList);
         }
 
-        //GET: Customer Create
+        //GET: Transaction Create
         public ActionResult Create()
         {
             return View();
         }
 
-        //POST: Customer create
+        //POST: Transaction Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customer)
+        public ActionResult Create(Transaction transaction)
         {
             if(!ModelState.IsValid)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            _ctx.Customers.Add(customer);
+            _ctx.Transactions.Add(transaction);
             _ctx.SaveChanges();
             return RedirectToAction("Index");
         }
-        //GET: Customer Delete
+
+        //GET: Transaction Delete
         public ActionResult Delete(int? id)
         {
             if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = _ctx.Customers.Find(id);
-            if(customer == null)
+            Transaction transaction = _ctx.Transactions.Find(id);
+            if(transaction == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(transaction);
         }
 
-        //POST: Customer Delete
+        //POST: Transaction Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Customer customer = _ctx.Customers.Find(id);
-            _ctx.Customers.Remove(customer);
+            Transaction transaction = _ctx.Transactions.Find(id);
+            _ctx.Transactions.Remove(transaction);
             _ctx.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        //GET: Customer Edit
+        //GET: Edit Transaction
         public ActionResult Edit(int? id)
-        {
-            Customer customer = _ctx.Customers.Find(id);
-            return View(customer);
-        }
-
-        //POST: Customer Edit
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Customer customer)
-        {
-            if(!ModelState.IsValid)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            _ctx.Entry(customer).State = EntityState.Modified;
-            _ctx.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        //GET: Customer Details
-        public ActionResult Details(int? id)
         {
             if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = _ctx.Customers.Find(id);
-            return View(customer);
+            Transaction transaction = _ctx.Transactions.Find(id);
+            if(transaction == null)
+            {
+                return HttpNotFound();
+            }
+            return View(transaction);
+        }
+
+        //POST: Transaction Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Transaction transaction)
+        {
+            if(!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            _ctx.Transactions.Add(transaction);
+            _ctx.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //GET: Transaction Details
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Transaction transaction = _ctx.Transactions.Find(id);
+            return View(transaction);
         }
     }
 }

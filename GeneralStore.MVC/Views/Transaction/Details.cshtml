@@ -1,0 +1,57 @@
+﻿@model GeneralStore.MVC.Models.Transaction
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Transaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustomerId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustomerId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.ProductId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Product.ProductId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Product.Price)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
