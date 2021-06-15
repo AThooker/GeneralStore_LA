@@ -17,7 +17,7 @@ namespace GeneralStore.MVC.Controllers
         public ActionResult Index()
         {
             List<Product> productList = _ctx.Products.ToList();
-            List<Product> orderList = productList.OrderByDescending(p => p.Name).ToList();
+            List<Product> orderList = productList.OrderByDescending(p => p.Price).ToList();
             return View(orderList);
         }
 
@@ -33,7 +33,7 @@ namespace GeneralStore.MVC.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(product);
             }
             _ctx.Products.Add(product);
             _ctx.SaveChanges();

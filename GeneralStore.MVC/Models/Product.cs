@@ -13,6 +13,7 @@ namespace GeneralStore.MVC.Models
         [Display(Name = "Product Name")]
         public string Name { get; set; }
         [Required]
+        [Range(0,1000000)]
         [Display(Name = "# In Stock")]
         public int InventoryCount { get; set; }
         [Required]

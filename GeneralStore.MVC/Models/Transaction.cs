@@ -10,6 +10,9 @@ namespace GeneralStore.MVC.Models
     public class Transaction
     {
         public int TransactionId { get; set; }
+        [Required]
+        [Range(0,10000)]
+        public int Amount { get; set; }
         [Display(Name = "Date/Time Created")]
         public DateTimeOffset TimeCreated
         {
