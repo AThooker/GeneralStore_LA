@@ -16,7 +16,7 @@ namespace GeneralStore.MVC.Controllers
         public ActionResult Index()
         {
             List<Transaction> transactions = _ctx.Transactions.ToList();
-            var orderedList = transactions.OrderByDescending(t => t.Product.Price).ToList();
+            var orderedList = transactions.OrderByDescending(t => t.TimeCreated).ToList();
             return View(orderedList);
         }
         
@@ -54,7 +54,7 @@ namespace GeneralStore.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View();
+            return View(transaction);
         }
 
         //POST: Product Delete
@@ -98,7 +98,7 @@ namespace GeneralStore.MVC.Controllers
             //grab the product the transaction is associated with
             Product product = _ctx.Products.Find(transaction.ProductId);
 
-            _ctx.Entry(transaction).State = EntityState.Modified;
+            //_ctx.Entry(transaction).State = EntityState.Modified;
 
             //if the new amount is less than it was, add the difference back to the product inventory
             if(transaction.Amount < transactionBeforeEdit.Amount)
@@ -110,6 +110,7 @@ namespace GeneralStore.MVC.Controllers
             {
                 product.InventoryCount -= (transaction.Amount - transactionBeforeEdit.Amount);
             }
+            transactionBeforeEdit.Amount = transaction.Amount;
             _ctx.SaveChanges();
             return RedirectToAction("Index");
         }

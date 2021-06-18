@@ -52,7 +52,7 @@ namespace GeneralStore.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View();
+            return View(product);
         }
 
         //POST: Product Delete
